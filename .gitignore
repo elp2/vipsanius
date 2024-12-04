@@ -1,0 +1,21 @@
+# macOS System Files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Xcode
+## Build generated files
+build/
+DerivedData/
+## Index
+*.xcuserdatad/
+*.xcuserdata/
+## Logs
+*.xccheckout
+*.xcscmblueprint
+## Temporary/intermediate files
+*.moved-aside
+*.swp
+*.xcworkspace
+## Additional settings
+*.xcuserstate
