@@ -1,0 +1,8 @@
+{
+  "YouTube": ["www.youtube.com", "youtube.com", "m.youtube.com", "old.reddit.com"],
+  "Reddit": ["www.reddit.com", "reddit.com"],
+  "X": ["x.com", "www.x.com", "twitter.com", "www.twitter.com"],
+  "Social Media": ["facebook.com", "instagram.com"],
+  "News": ["theverge.com", "news.ycombinator.com", "cnn.com", "www.cnn.com"],
+  "Distracting": ["YouTube", "Reddit", "X", "Social Media", "News"]
+}
