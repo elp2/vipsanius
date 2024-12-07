@@ -2,8 +2,10 @@ import Cocoa
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem?
-    
+    var executor: PythonExecutor?
+
     func applicationDidFinishLaunching(_ notification: Notification) {
+        executor = PythonExecutor()
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         if let button = statusItem?.button {
             button.image = NSImage(named: "tray_icon")
@@ -11,19 +13,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         let menu = NSMenu()
-        menu.addItem(NSMenuItem(title: "Block", action: #selector(blockSelected), keyEquivalent: ""))
-        menu.addItem(NSMenuItem(title: "Unblock", action: #selector(unblockSelected), keyEquivalent: ""))
-        
+        for name in executor!.getConfig().keys {
+            let menuItem = NSMenuItem(title: "Unblock " + name, action: #selector(unblockSelected), keyEquivalent: "")
+            menuItem.representedObject = name
+            menu.addItem(menuItem)
+        }
+
         menu.addItem(NSMenuItem.separator())
         menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
         statusItem?.menu = menu
     }
 
-    @objc func blockSelected() {
-        print("Block selected!")
-    }
-
-    @objc func unblockSelected() {
-        print("Unblock selected!")
+    @objc func unblockSelected(_ sender: NSMenuItem) {
+        if let name = sender.representedObject as? String {
+            executor!.unblock(name: name)
+        }
     }
 }

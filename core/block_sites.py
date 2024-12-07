@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import argparse
 import json
 import os
@@ -84,13 +86,13 @@ def flush_dns():
 
 def main():
     parser = argparse.ArgumentParser(description='Block or unblock groups of websites.')
-    parser.add_argument('action', choices=['block', 'unblock', 'temp_unblock'], help='Action to perform')
-    parser.add_argument('group', help='Name of the group')
+    parser.add_argument('action', choices=['block', 'unblock', 'temp_unblock', 'config'], help='Action to perform')
+    parser.add_argument('--group', help='Name of the group')
     parser.add_argument('--duration', type=int, default=60, help='Duration in seconds for temporary unblock')
 
     args = parser.parse_args()
 
-    groups = load_groups('sample_groups.json') # TODO
+    groups = load_groups('/Users/edwardpalmer/dev/vipsanius/core/sample_groups.json')
 
     backup_hosts_file()
 
@@ -100,14 +102,8 @@ def main():
         unblock_group(args.group, groups)
     elif args.action == 'temp_unblock':
         temporary_unblock(args.group, groups, args.duration)
+    elif args.action == 'config':
+        print(json.dumps(groups))
 
 if __name__ == '__main__':
-    # Must be run with administrative privileges.
-    try:
-        with open(hosts_file(), 'a'):
-            pass
-    except PermissionError:
-        print("Error: This script requires administrative privileges.")
-        sys.exit(1)
-
     main()
